@@ -1,8 +1,10 @@
 package com.example.microserviceexam.controller;
 import com.example.microserviceexam.model.userInput;
 import com.example.microserviceexam.service.userService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/input")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class userController {
     @Autowired
     private userService userService;

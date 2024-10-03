@@ -1,11 +1,13 @@
 package com.example.microserviceexam.service;
 import com.example.microserviceexam.dto.userDTO;
 import com.example.microserviceexam.model.userInput;
+import com.example.microserviceexam.rabbitMQ.eventDispatch;
 import com.example.microserviceexam.repo.userInputRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.microserviceexam.client.inputClientImp;
+/*import com.example.microserviceexam.client.inputClientImp;*/
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -13,21 +15,19 @@ public class userService implements userServiceImp {
     @Autowired
     private userInputRepo userInputRepo;
 
+    /*@Autowired
+    private inputClientImp inputClientImp;*/
+
     @Autowired
-    private inputClientImp inputClientImp;
+    private eventDispatch e;
 
     @Override
-    public userInput saveInputExternal(userInput userInput){
-    userDTO userdto = new userDTO(
-            userInput.getGymProficiency(),
-            userInput.getCurrentWeight(),
-            userInput.getAge(),
-            userInput.getHeight(),
-            userInput.getGoalWeight()
-    );
-    inputClientImp.input(userdto);
-    return userInputRepo.save(userInput);
-}
+    public userInput saveInputExternal(userInput userInput) {
+        userInputRepo.save(userInput);
+        userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
+        e.send(userDTO);
+        return  userInput;
+    }
 
     @Override
     public userInput saveInput(userInput userInput){
