@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /*import com.example.microserviceexam.client.inputClientImp;*/
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class userService implements userServiceImp {
@@ -53,5 +53,9 @@ public class userService implements userServiceImp {
     @Override
     public void deleteUserById(Long userId){
         userInputRepo.deleteById(userId);
+    }
+    @Override
+    public Optional<userInput> fetchSingleUser(Long userId) {
+        return userInputRepo.findById(userId);
     }
 }
