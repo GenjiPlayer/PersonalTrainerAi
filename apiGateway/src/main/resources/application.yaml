@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: posts-route
+          uri: ${POSTS_ROUTE_URI:http://localhost:8081}
+          predicates:
+            - Path=/posts/**
+          filters:
+            - PrefixPath=/input
+            - AddResponseHeader= X-Powered-By, Gateway Service
+server:
+  port: 8081
