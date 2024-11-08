@@ -1,13 +1,17 @@
 spring:
+  main:
+    web-application-type: reactive
   cloud:
     gateway:
       routes:
-        - id: posts-route
-          uri: ${POSTS_ROUTE_URI:http://localhost:8081}
+        - id: input-route
+          uri: http://localhost:8080
           predicates:
             - Path=/input/**
-          filters:
-            - PrefixPath=/input
-            - AddResponseHeader= X-Powered-By, Gateway Service
+        - id: health-check
+          uri: http://localhost:8080/actuator/health
+          predicates:
+            - Path=/health
 server:
   port: 8081
+
