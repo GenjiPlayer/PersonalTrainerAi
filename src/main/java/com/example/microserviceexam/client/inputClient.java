@@ -5,4 +5,4 @@ import org.springframework.http.ResponseEntity;
 
 public interface inputClient {
    ResponseEntity<String> input(userDTO userDTO);
-}
+}//kkgkgkg
