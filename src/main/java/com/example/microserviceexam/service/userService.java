@@ -26,12 +26,15 @@ public class userService implements userServiceImp {
         userInputRepo.save(userInput);
         userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
         e.send(userDTO);
-        return  userInput;
+        return  userInput;       //kan også slettes etterhvert
     }
 
     @Override
     public userInput saveInput(userInput userInput){
-        return userInputRepo.save(userInput);
+        userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
+        e.send(userDTO);
+        userInputRepo.save(userInput);
+        return userInput;
     }
 
     @Override
