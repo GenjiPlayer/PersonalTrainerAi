@@ -1,0 +1,17 @@
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: input-route
+          uri: http://localhost:8080
+          predicates:
+            - Path=/input/**
+        - id: health-check
+          uri: http://localhost:8080/actuator/health
+          predicates:
+            - Path=/health
+server:
+  port: 8081
+

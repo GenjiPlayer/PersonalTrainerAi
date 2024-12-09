@@ -6,11 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/input")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class userController {
     @Autowired
     private userService userService;
@@ -24,13 +25,19 @@ public class userController {
     @PostMapping("/test")
     public ResponseEntity<userInput> submitUserInputExternally(@RequestBody userInput userInput){
         userInput saveUser = userService.saveInputExternal(userInput);
-        return ResponseEntity.ok(saveUser);
+        return ResponseEntity.ok(saveUser); //delete this function at some point
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<userInput>> getAllUsers(){
         List<userInput> allUsers = userService.fetchAllUserInput();
         return ResponseEntity.ok(allUsers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<userInput>> getSingleUser(@PathVariable Long id){
+        Optional<userInput> singleUser = userService.fetchSingleUser(id);
+        return ResponseEntity.ok(singleUser);
     }
 
     @PutMapping("/update/{id}")
