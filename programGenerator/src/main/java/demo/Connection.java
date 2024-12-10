@@ -1,4 +1,4 @@
-package com.example.demo;
+package demo;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,10 +22,7 @@ public class Connection {
         ResponseEntity<String> response = restTemplate.exchange(
                 url, HttpMethod.GET, entity, String.class);
 
-
-
         System.out.println(response.getBody());
-
     }
 }
 
