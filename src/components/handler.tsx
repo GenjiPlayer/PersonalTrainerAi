@@ -2,7 +2,7 @@
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const response = await fetch('http://localhost:8080/input/submit', {
+            const response = await fetch('http://localhost:8081', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(req.body),
