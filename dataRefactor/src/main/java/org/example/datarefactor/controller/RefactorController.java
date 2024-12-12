@@ -1,5 +1,6 @@
 package org.example.datarefactor.controller;
 
+import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.service.RefactorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +30,16 @@ public class RefactorController {
     }
 
     @GetMapping("/enriched")
-    public ResponseEntity<List<Object>> getEnrichedData() {
+    public ResponseEntity<List<RefactorDto>> getEnrichedData() {
         List<RefactorModel> allData = refactorService.getAllData();
 
-        List<Object> enrichedData = allData.stream()
+        List<RefactorDto> enrichedData = allData.stream()
                 .map(data -> {
                     String parameter = data.getGymProficiency();
                     Object exerApiData = refactorService.getApiData(parameter);
-
-                    return new Object() {
-                        public RefactorModel refactorData = data;
-                        public Object apiData = exerApiData;
-                    };
+                    return new RefactorDto(data, exerApiData);
                 })
                 .toList();
-
         return ResponseEntity.ok(enrichedData);
     }
-
 }

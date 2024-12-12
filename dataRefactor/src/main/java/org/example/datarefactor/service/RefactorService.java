@@ -29,7 +29,7 @@ public class RefactorService {
     }
 
     public Object getApiData(String apiName) {
-        String url = "https://api.api-ninjas.com/v1/exercises" + apiName;
+        String url = "https://api.api-ninjas.com/v1/exercises?Name" + apiName;
 
         try {
             return restTemplate.getForObject(url, Object.class);
