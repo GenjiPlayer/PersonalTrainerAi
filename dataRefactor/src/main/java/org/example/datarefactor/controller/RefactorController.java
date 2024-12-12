@@ -26,8 +26,25 @@ public class RefactorController {
     public ResponseEntity<RefactorModel> getDataById(@PathVariable Long id) {
         RefactorModel data = refactorService.getDataById(id);
         return ResponseEntity.ok(data);
-
     }
 
+    @GetMapping("/enriched")
+    public ResponseEntity<List<Object>> getEnrichedData() {
+        List<RefactorModel> allData = refactorService.getAllData();
+
+        List<Object> enrichedData = allData.stream()
+                .map(data -> {
+                    String parameter = data.getGymProficiency();
+                    Object exerApiData = refactorService.getApiData(parameter);
+
+                    return new Object() {
+                        public RefactorModel refactorData = data;
+                        public Object apiData = exerApiData;
+                    };
+                })
+                .toList();
+
+        return ResponseEntity.ok(enrichedData);
+    }
 
 }
