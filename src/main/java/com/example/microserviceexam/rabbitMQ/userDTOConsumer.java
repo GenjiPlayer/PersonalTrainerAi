@@ -18,7 +18,6 @@ public class userDTOConsumer {
     public void recievedPayload(userDTO userdto){
         System.out.println("YIPPIIEIIEIEIEIEIEI" + userdto);
 
-
         try{
             Object res = restTemplate.postForObject(refactorService, userdto, Object.class);
             System.out.println("Response:" + res);
