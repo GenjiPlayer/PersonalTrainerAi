@@ -6,12 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "??")
 public class RefactorModel {
 
     @Id
@@ -22,5 +23,5 @@ public class RefactorModel {
     private String gymProficiency;
 
     @Column(nullable = false)
-    private String age;
+    private BigDecimal age;
 }
