@@ -76,4 +76,4 @@ build/
 /mvnw.cmd
 /node_modules/
 /target/
-/package.json
+/package-lock.json
