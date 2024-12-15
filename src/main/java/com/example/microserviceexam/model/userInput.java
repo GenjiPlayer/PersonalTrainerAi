@@ -1,8 +1,10 @@
 package com.example.microserviceexam.model;
-import jakarta.persistence.*;
-import lombok.*;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,24 +17,31 @@ public class userInput {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(nullable = false)
+    @NotNull(message = "cant be 0")
     private String gymProficiency;
 
+    @Column(nullable = false)
+    @NotNull(message = "cant be 0")
+    @Min(value = 30, message = "cant be less than 30")
+    @Max(value = 200, message = "cant be more than 200")
+    private Double currentWeight;
 
     @Column(nullable = false)
-    private BigDecimal currentWeight;
-
-
-    @Column(nullable = false)
-    private BigDecimal age;
-
+    @NotNull(message = "cant be null")
+    @Min(value = 18, message = "cant be less than 18")
+    @Max(value = 100, message = "cant be more than 100")
+    private Integer age;
 
     @Column(nullable = false)
-    private BigDecimal height;
-
+    @NotNull(message = "cant be null")
+    @Min(value = 100, message = "cant be less than 100")
+    @Max(value = 250, message = "cant be more than 200")
+    private Integer height;
 
     @Column(nullable = false)
-    private BigDecimal goalWeight;
-
+    @NotNull(message = "cant be null")
+    @Min(value = 30, message = "cant be less than 30")
+    @Max(value = 200, message = "cant be more than 200")
+    private Double goalWeight;
 }

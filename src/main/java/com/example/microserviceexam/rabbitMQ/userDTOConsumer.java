@@ -17,12 +17,11 @@ public class userDTOConsumer {
     @RabbitListener(queues = "${input.queue}")
     public void recievedPayload(userDTO userdto){
         System.out.println("YIPPIIEIIEIEIEIEIEI" + userdto);
-
         try{
             Object res = restTemplate.postForObject(refactorService, userdto, Object.class);
-            System.out.println("Response:" + res);
+            System.out.println("Res:" + res);
         } catch (Exception e){
-            System.out.println("Error:" + e.getMessage());
+            System.out.println("womp womp:" + e.getMessage());
         }
     }
 

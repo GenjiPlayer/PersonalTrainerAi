@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class workoutDTO{
-    private Long userId;
+    private userDTO userId;  //mayhaps ludvik henter denne?
     private Long workoutPlanId;
 }

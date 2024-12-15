@@ -16,5 +16,5 @@ import org.springframework.web.servlet.*;
     ) {
         anExc.printStackTrace();
         return null;
-    }
+    } //copy paste fra stackoverflow, finn link senere
 }
