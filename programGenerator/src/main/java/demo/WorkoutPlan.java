@@ -9,8 +9,13 @@ import java.util.Random;
 public class WorkoutPlan{
 
     // List of muscles to fetch exercises for
+    public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};
+    public static final String[] lower1 = {"glutes", "hamstrings", "calves"};
+    public static final String[] upper2 = {"chest", "shoulders", "triceps"};
+    public static final String[] lower2 = {"glutes", "quardricps", "abdominals"};
     public static final String[] push = {"chest", "shoulders", "triceps"};
-    public static final String[] pull = {"back", "lats", "biceps"};
+    public static final String[] pull = {"middle_back", "lats", "biceps"};
+    public static final String[] legs = {"glutes", "quadriceps", "hamstrings", "calves"};
 
     public void generatePlan(String jsonResponse, String muscle) {
         // Parse the JSON response into a List of
