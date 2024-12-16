@@ -8,7 +8,6 @@ public class Exercise {
     private String difficulty;
     private String instructions;
 
-    // Getters and setters
     public String getName() {
         return name;
     }
