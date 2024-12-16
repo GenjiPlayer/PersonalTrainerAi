@@ -8,6 +8,7 @@ public class inputClient implements inputClientImp {
     @Autowired
     private RestTemplate restTemplate;
 
+<<<<<<< HEAD
     private final String refactorService = "http://localhost:8090/refactor/enriched";
 
     @Override
@@ -21,3 +22,4 @@ public class inputClient implements inputClientImp {
     }
 
 }
+
