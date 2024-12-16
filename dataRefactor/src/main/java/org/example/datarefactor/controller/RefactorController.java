@@ -21,6 +21,7 @@ public class RefactorController {
     private RefactorService refactorService;
     @Autowired
     private RefactorRepository refactorRepository;
+
     @GetMapping("/all")
     public ResponseEntity<List<RefactorModel>> getAllData() {
         List<RefactorModel> allData = refactorService.getAllData();
@@ -54,3 +55,4 @@ public class RefactorController {
         return ResponseEntity.ok(temporaryStorage);
     }
 }
+//test
