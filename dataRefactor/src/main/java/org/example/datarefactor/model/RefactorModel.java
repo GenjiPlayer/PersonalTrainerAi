@@ -23,5 +23,5 @@ public class RefactorModel {
     private String gymProficiency;
 
     @Column(nullable = false)
-    private BigDecimal age;
+    private Integer age;
 }

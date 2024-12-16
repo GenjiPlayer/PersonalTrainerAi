@@ -2,6 +2,7 @@ package org.example.datarefactor.controller;
 
 import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
+import org.example.datarefactor.repository.RefactorRepository;
 import org.example.datarefactor.service.RefactorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,8 @@ public class RefactorController {
     private final List<RefactorModel> temporaryStorage = new ArrayList<>();
     @Autowired
     private RefactorService refactorService;
-
+    @Autowired
+    private RefactorRepository refactorRepository;
     @GetMapping("/all")
     public ResponseEntity<List<RefactorModel>> getAllData() {
         List<RefactorModel> allData = refactorService.getAllData();
@@ -33,8 +35,8 @@ public class RefactorController {
 
     @PostMapping("/enriched")
     public ResponseEntity<List<RefactorDto>> getEnrichedData(@RequestBody RefactorModel refactorModel) {
+        RefactorModel savedModel = refactorRepository.save(refactorModel);
         List<RefactorModel> allData = refactorService.getAllData();
-
         List<RefactorDto> enrichedData = allData.stream()
                 .map(data -> {
                     String parameter = data.getGymProficiency();
@@ -42,7 +44,8 @@ public class RefactorController {
                     return new RefactorDto(data, exerApiData);
                 })
                 .toList();
-        temporaryStorage.add(refactorModel);
+        System.out.println("Saved and enriched model: " + savedModel);
+
         return ResponseEntity.ok(enrichedData);
     }
 

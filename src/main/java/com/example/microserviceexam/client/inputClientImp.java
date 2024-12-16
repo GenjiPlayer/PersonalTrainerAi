@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface inputClientImp {
 
-  void refactor(userDTO userDTO);
+  Object refactor(userDTO userDTO);
 }
