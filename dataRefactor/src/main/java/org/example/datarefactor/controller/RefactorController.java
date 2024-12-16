@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,6 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class RefactorController {
 
+    private final List<RefactorModel> temporaryStorage = new ArrayList<>();
     @Autowired
     private RefactorService refactorService;
 
@@ -29,8 +31,8 @@ public class RefactorController {
         return ResponseEntity.ok(data);
     }
 
-    @GetMapping("/enriched")
-    public ResponseEntity<List<RefactorDto>> getEnrichedData() {
+    @PostMapping("/enriched")
+    public ResponseEntity<List<RefactorDto>> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         List<RefactorModel> allData = refactorService.getAllData();
 
         List<RefactorDto> enrichedData = allData.stream()
@@ -40,6 +42,12 @@ public class RefactorController {
                     return new RefactorDto(data, exerApiData);
                 })
                 .toList();
+        temporaryStorage.add(refactorModel);
         return ResponseEntity.ok(enrichedData);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RefactorModel>> getAllRefactoredData() {
+        return ResponseEntity.ok(temporaryStorage);
     }
 }
