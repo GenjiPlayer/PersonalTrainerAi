@@ -30,9 +30,9 @@ public class WorkoutPlan {
     public static final String[] pull = {"middle_back", "lats", "biceps"};
     public static final String[] legs = {"glutes", "quadriceps", "hamstrings", "calves"};
 
-
+/*
 @JsonIgnore
-    public String getProficiency(Exercise exercise) {
+    public Object getProficiency(Object exercise) {
         try {
             String res = this.restTemplate.postForObject(ProgramGenerator, exercise, String.class);
             System.out.println("wtf" + res);
@@ -40,7 +40,8 @@ public class WorkoutPlan {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
+
     public void setProficiency(String proficiency) {
         this.gymProficiency = proficiency;
     }
@@ -69,7 +70,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
 
-        } else if (gymProficiency != "beginner") {
+        } else if ("beginner".equalsIgnoreCase(gymProficiency)) {
             workoutPlanOutput.append("Intro to Training program here:\n")
                     .append("-------------------------------\n")
                     .append("=================Upper body day 1===============\n");

@@ -21,8 +21,9 @@ public class WorkoutController {
     }
     @JsonIgnore
     @PostMapping("/generate")
-    public ResponseEntity<String> generateWorkoutPlan(@RequestBody String requestBody) {
-        workoutPlan.setProficiency(requestBody);
+    public ResponseEntity<String> generateWorkoutPlan(@RequestBody WorkoutModel requestBody) {
+        workoutPlan.setProficiency(requestBody.getGymProficiency());
+        System.out.println(requestBody);
         String plan = workoutPlan.getWorkoutPlan();
         return ResponseEntity.ok(plan);
     }

@@ -42,7 +42,7 @@ public class RefactorController {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
         RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
-        String send = refactorService.sendDataToGenerator(enrichedData);
+        String send = refactorService.sendDataToGenerator(savedModel);
         System.out.println("Sent to svein :3" + send);
         return ResponseEntity.ok(enrichedData);
     }

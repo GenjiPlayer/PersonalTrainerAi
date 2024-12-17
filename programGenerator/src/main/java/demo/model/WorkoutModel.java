@@ -19,6 +19,7 @@ public class WorkoutModel {
     @Column(nullable = false)
     private String gymProficiency;
 
-
+    @Column(nullable = false)
+    private Integer age;
 
 }
