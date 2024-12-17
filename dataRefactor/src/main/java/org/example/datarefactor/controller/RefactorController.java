@@ -36,12 +36,9 @@ public class RefactorController {
     }
 
     @PostMapping("/enriched")
-    public ResponseEntity<List<RefactorDto>> getEnrichedData(@RequestBody RefactorModel refactorModel) {
+    public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
-        List<RefactorModel> allData = refactorService.getAllData();
-        List<RefactorDto> enrichedData = allData.stream()
-                .map(data -> new RefactorDto(data, ProgramGenerator))
-                .toList();
+        RefactorDto enrichedData = new RefactorDto(savedModel,"vet ikke hvorfor denne er her men får error hvis jeg fjerner den :)");
         System.out.println("Saved and enriched model: " + savedModel);
         return ResponseEntity.ok(enrichedData);
     }
