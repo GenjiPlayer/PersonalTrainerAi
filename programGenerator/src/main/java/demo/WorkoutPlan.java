@@ -2,15 +2,21 @@ package demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Component
 public class WorkoutPlan {
+    @Autowired
+    private RestTemplate restTemplate;
+
 
     private final Connection connection = new Connection();
-    private String proficiency = "beginner";
+    private final String ProgramGenerator = "http://localhost:8090/refactor/send-to-generator";
+    private String proficiency;
 
     public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};
     public static final String[] lower1 = {"glutes", "hamstrings", "calves"};
@@ -20,9 +26,21 @@ public class WorkoutPlan {
     public static final String[] pull = {"middle_back", "lats", "biceps"};
     public static final String[] legs = {"glutes", "quadriceps", "hamstrings", "calves"};
 
+
+
+    public String getProficiency(Exercise exercise) {
+        try {
+            String res = this.restTemplate.postForObject(ProgramGenerator, exercise, String.class);
+            System.out.println("wtf" + res);
+            return res;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void setProficiency(String proficiency) {
         this.proficiency = proficiency;
     }
+
 
     public String getWorkoutPlan() {
         System.out.println("Proficiency: " + proficiency); // Debugging
@@ -71,24 +89,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
         } else {
-            workoutPlanOutput.append("Intro to Training program here:\n")
-                    .append("-------------------------------\n")
-                    .append("=================PUSH DAY===============\n");
-            for (String muscle : push) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-            workoutPlanOutput.append("=================PULL DAY===============\n");
-            for (String muscle : pull) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-            workoutPlanOutput.append("=================LEG DAY===============\n");
-            for (String muscle : legs) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-
+            System.out.println("proficiency is not beginner or intermediate. Or it is not found" + proficiency);
         }
         return workoutPlanOutput.toString();
     }
