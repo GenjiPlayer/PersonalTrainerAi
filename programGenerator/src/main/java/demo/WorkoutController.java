@@ -10,9 +10,11 @@ public class WorkoutController {
     private final WorkoutPlan workoutPlan = new WorkoutPlan();
 
     @PostMapping("/generate")
-    public ResponseEntity<String> generateWorkoutPlan(@RequestBody String proficiency) {
-        workoutPlan.setProficiency(proficiency);
+    public ResponseEntity<String> generateWorkoutPlan(@RequestBody Exercise exercise) {
+        workoutPlan.getProficiency(exercise);
         String workoutPlanResult = workoutPlan.getWorkoutPlan();
         return ResponseEntity.ok(workoutPlanResult);
     }
+
 }
+

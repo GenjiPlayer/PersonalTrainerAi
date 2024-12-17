@@ -2,14 +2,18 @@ package demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Random;
 
 public class WorkoutPlan {
 
+
     private final Connection connection = new Connection();
-    private String proficiency = "beginner";
+    private final String ProgramGenerator = "http://localhost:8090/refactor/send-to-generator";
+    private String proficiency;
+    public RestTemplate restTemplate;
 
     public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};
     public static final String[] lower1 = {"glutes", "hamstrings", "calves"};
@@ -21,6 +25,14 @@ public class WorkoutPlan {
 
     public void setProficiency(String proficiency) {
         this.proficiency = proficiency;
+    }
+
+    public String getProficiency(Exercise exercise) {
+        try {
+            return restTemplate.postForObject(ProgramGenerator, exercise, String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getWorkoutPlan() {
