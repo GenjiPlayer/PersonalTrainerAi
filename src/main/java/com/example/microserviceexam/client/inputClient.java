@@ -23,6 +23,5 @@ public class inputClient implements inputClientImp {
         }
         return null;
     }
-
 }
 

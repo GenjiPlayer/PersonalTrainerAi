@@ -19,6 +19,16 @@ public class RefactorService {
     @Autowired
     private RestTemplate restTemplate;
 
+    private final String ProgramGenerator = "https://program-generator/Svein endpoint... ";
+
+    public String sendDataToGenerator(RefactorModel refactorModel) {
+        try {
+            return restTemplate.postForObject(ProgramGenerator, refactorModel, String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<RefactorModel> getAllData() {
         return refactorRepository.findAll();
     }

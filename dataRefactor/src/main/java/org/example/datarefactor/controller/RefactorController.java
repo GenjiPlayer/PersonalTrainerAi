@@ -50,9 +50,14 @@ public class RefactorController {
         return ResponseEntity.ok(enrichedData);
     }
 
+    @PostMapping("/send-to-generator")
+    public ResponseEntity<String> sendToGenerator(@RequestBody RefactorModel refactorModel) {
+        String response = refactorService.sendDataToGenerator(refactorModel);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping
     public ResponseEntity<List<RefactorModel>> getAllRefactoredData() {
         return ResponseEntity.ok(temporaryStorage);
     }
 }
-//test
