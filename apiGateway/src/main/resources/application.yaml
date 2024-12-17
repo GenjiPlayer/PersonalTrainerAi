@@ -13,19 +13,24 @@ spring:
           predicates:
             - Path=/input/**
           filters:
-            - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/common-fallback
+            - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/fallback
 
         - id: health-check
           uri: http://localhost:8080/actuator/health
           predicates:
-            - Path=/health
+            - Path=/input/health
 
         - id: refactor-route
           uri: http://localhost:8090/refactor/**
           predicates:
             - Path=/refactor/**
           filters:
-            - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/common-fallback
+            - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/fallback
+
+        - id: refactor-health-check
+          uri: http://localhost:8090/actuator/health
+          predicates:
+            - Path=/refactor/health
 
       discovery:
         locator:
