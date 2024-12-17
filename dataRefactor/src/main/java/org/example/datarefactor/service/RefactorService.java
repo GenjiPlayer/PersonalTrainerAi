@@ -19,7 +19,7 @@ public class RefactorService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String ProgramGenerator = "http://localhost:8080/api/workout/generate";
+    private final String ProgramGenerator = "http://localhost:8082/api/workout/generate";
 
     public String sendDataToGenerator(RefactorModel refactorModel) {
         try {
@@ -38,12 +38,4 @@ public class RefactorService {
                 .orElseThrow(() -> new RuntimeException("Data not found... id: " + id));
     }
 
-    public Object getApiData(String apiName) {
-        String url = "https://api.api-ninjas.com/v1/exercises?Name" + apiName;
-        try {
-            return restTemplate.getForObject(url, Object.class);
-        }catch (RestClientException e) {
-            throw new RuntimeException("Failed to get data from API: " + apiName, e);
-        }
-    }
 }

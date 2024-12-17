@@ -21,6 +21,7 @@ public class RefactorController {
     private RefactorService refactorService;
     @Autowired
     private RefactorRepository refactorRepository;
+    private final String ProgramGenerator = "http://localhost:8082/api/workout/generate";
 
     @GetMapping("/all")
     public ResponseEntity<List<RefactorModel>> getAllData() {
@@ -41,8 +42,7 @@ public class RefactorController {
         List<RefactorDto> enrichedData = allData.stream()
                 .map(data -> {
                     String parameter = data.getGymProficiency();
-                    Object exerApiData = refactorService.getApiData(parameter);
-                    return new RefactorDto(data, exerApiData);
+                    return new RefactorDto(data, ProgramGenerator);
                 })
                 .toList();
         System.out.println("Saved and enriched model: " + savedModel);
@@ -53,6 +53,7 @@ public class RefactorController {
     @PostMapping("/send-to-generator")
     public ResponseEntity<String> sendToGenerator(@RequestBody RefactorModel refactorModel) {
         String response = refactorService.sendDataToGenerator(refactorModel);
+        System.out.println("lololol" + refactorModel);
         return ResponseEntity.ok(response);
     }
 

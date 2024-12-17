@@ -72,6 +72,7 @@ public class WorkoutPlan {
             }
         } else {
             workoutPlanOutput.append("No proficiency detected in your profile");
+
         }
         return workoutPlanOutput.toString();
     }
