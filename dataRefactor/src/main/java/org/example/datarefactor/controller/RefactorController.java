@@ -21,6 +21,7 @@ public class RefactorController {
     private RefactorService refactorService;
     @Autowired
     private RefactorRepository refactorRepository;
+
     @GetMapping("/all")
     public ResponseEntity<List<RefactorModel>> getAllData() {
         List<RefactorModel> allData = refactorService.getAllData();
@@ -47,6 +48,12 @@ public class RefactorController {
         System.out.println("Saved and enriched model: " + savedModel);
 
         return ResponseEntity.ok(enrichedData);
+    }
+
+    @PostMapping("/send-to-generator")
+    public ResponseEntity<String> sendToGenerator(@RequestBody RefactorModel refactorModel) {
+        String response = refactorService.sendDataToGenerator(refactorModel);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
