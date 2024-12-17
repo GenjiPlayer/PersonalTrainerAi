@@ -1,5 +1,6 @@
 package demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import demo.model.WorkoutModel;
 import demo.repository.WorkoutRepository;
 import org.springframework.web.bind.annotation.*;
@@ -18,23 +19,21 @@ public class WorkoutController {
         this.workoutRepository = workoutRepository;
         this.workoutPlan = workoutPlan;
     }
-
+    @JsonIgnore
     @PostMapping("/generate")
-    public ResponseEntity<String> generateWorkoutPlan(@RequestBody Map<String, String> requestBody) {
-        String gymProficiency = requestBody.get("gymProficiency");
-
-        workoutPlan.setProficiency(gymProficiency);
+    public ResponseEntity<String> generateWorkoutPlan(@RequestBody String requestBody) {
+        workoutPlan.setProficiency(requestBody);
         String plan = workoutPlan.getWorkoutPlan();
         return ResponseEntity.ok(plan);
     }
 
-    @GetMapping("/generate")
+    /*@GetMapping("/generate")
     public ResponseEntity<String> getWorkoutPlan(@RequestBody Exercise exercise){
         String proficiency = workoutPlan.getProficiency(exercise);
         workoutPlan.setProficiency(proficiency);
         String workoutPlanResult = workoutPlan.getWorkoutPlan();
         return ResponseEntity.ok(workoutPlanResult);
-    }
+    }*/
 
 }
 

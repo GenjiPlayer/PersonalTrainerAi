@@ -1,5 +1,6 @@
 package demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.model.WorkoutModel;
@@ -19,7 +20,7 @@ public class WorkoutPlan {
 
     private final Connection connection = new Connection();
     private final String ProgramGenerator = "http://localhost:8090/refactor/send-to-generator";
-    private String proficiency;
+    private String gymProficiency;
 
     public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};
     public static final String[] lower1 = {"glutes", "hamstrings", "calves"};
@@ -30,7 +31,7 @@ public class WorkoutPlan {
     public static final String[] legs = {"glutes", "quadriceps", "hamstrings", "calves"};
 
 
-
+@JsonIgnore
     public String getProficiency(Exercise exercise) {
         try {
             String res = this.restTemplate.postForObject(ProgramGenerator, exercise, String.class);
@@ -41,15 +42,15 @@ public class WorkoutPlan {
         }
     }
     public void setProficiency(String proficiency) {
-        this.proficiency = proficiency;
+        this.gymProficiency = proficiency;
     }
 
 
     public String getWorkoutPlan() {
-        System.out.println("Proficiency: " + proficiency); // Debugging
+        System.out.println("Proficiency: " + gymProficiency); // Debugging
         StringBuilder workoutPlanOutput = new StringBuilder();
 
-        if ("intermediate".equalsIgnoreCase(proficiency) || "expert".equalsIgnoreCase(proficiency)) {
+        if ("intermediate".equalsIgnoreCase(gymProficiency) || "expert".equalsIgnoreCase(gymProficiency)) {
             workoutPlanOutput.append("Intro to Training program here:\n")
                     .append("-------------------------------\n")
                     .append("=================PUSH DAY===============\n");
@@ -68,7 +69,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
 
-        } else if ("beginner".equalsIgnoreCase(proficiency)) {
+        } else if (gymProficiency != "beginner") {
             workoutPlanOutput.append("Intro to Training program here:\n")
                     .append("-------------------------------\n")
                     .append("=================Upper body day 1===============\n");
@@ -92,7 +93,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
         } else {
-            System.out.println("proficiency is not beginner or intermediate. Or it is not found" + proficiency);
+            System.out.println("proficiency is not beginner or intermediate. Or it is not found" + gymProficiency);
         }
         return workoutPlanOutput.toString();
     }
@@ -110,7 +111,7 @@ public class WorkoutPlan {
 
             if (exercises != null && !exercises.isEmpty()) {
                 List<Exercise> filteredExercises = exercises;
-                if ("beginner".equalsIgnoreCase(proficiency)) {
+                if ("beginner".equalsIgnoreCase(gymProficiency)) {
                     filteredExercises = exercises.stream()
                             .filter(exercise -> "Beginner".equalsIgnoreCase(exercise.getDifficulty()))
                             .toList();

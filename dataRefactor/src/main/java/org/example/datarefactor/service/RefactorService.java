@@ -1,5 +1,8 @@
 package org.example.datarefactor.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.example.datarefactor.dto.ProfDto;
+import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.repository.RefactorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +11,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Service
 public class RefactorService {
@@ -21,11 +22,12 @@ public class RefactorService {
     private RestTemplate restTemplate;
 
     private final String ProgramGenerator = "http://localhost:8082/api/workout/generate";
-
-    public String sendDataToGenerator(String gymProficency) {
+    @JsonIgnore
+    public String sendDataToGenerator(RefactorDto refactorDto) {
         try {
-            Map<String, String> requestBody = Map.of("gymProfficency", gymProficency);
-            return restTemplate.postForObject(ProgramGenerator, requestBody, String.class);
+            String res = restTemplate.postForObject(ProgramGenerator, refactorDto, String.class);
+            System.out.println("YAHOO!" + res);
+            return res;
         } catch (RestClientException e) {
             throw new RuntimeException("Failed to send data to generator", e);
         }

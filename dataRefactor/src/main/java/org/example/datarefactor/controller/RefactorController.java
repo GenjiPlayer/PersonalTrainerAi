@@ -1,5 +1,7 @@
 package org.example.datarefactor.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.example.datarefactor.dto.ProfDto;
 import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.repository.RefactorRepository;
@@ -34,25 +36,26 @@ public class RefactorController {
         RefactorModel data = refactorService.getDataById(id);
         return ResponseEntity.ok(data);
     }
-
+    @JsonIgnore
     @PostMapping("/enriched")
     public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
         RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
+        String send = refactorService.sendDataToGenerator(enrichedData);
+        System.out.println("Sent to svein :3" + send);
         return ResponseEntity.ok(enrichedData);
     }
+}
 
-        @PostMapping("/send-to-generator")
-    public ResponseEntity<String> sendToGenerator(@RequestBody RefactorModel refactorModel) {
-        String gymProficency = refactorModel.getGymProficiency();
-        String response = refactorService.sendDataToGenerator(gymProficency);
-        System.out.println("lololol" + gymProficency);
+       /* @PostMapping("/send-to-generator")
+    public ResponseEntity<RefactorDto> sendToGenerator(@RequestBody RefactorModel refactorModel) {
+        System.out.println("lololol" + response);
         return ResponseEntity.ok(response);
-    }
+    }/*
 
     @GetMapping
     public ResponseEntity<List<RefactorModel>> getAllRefactoredData() {
         return ResponseEntity.ok(temporaryStorage);
     }
-}
+} */
