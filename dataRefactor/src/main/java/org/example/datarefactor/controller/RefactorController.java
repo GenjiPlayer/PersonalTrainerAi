@@ -45,8 +45,9 @@ public class RefactorController {
 
         @PostMapping("/send-to-generator")
     public ResponseEntity<String> sendToGenerator(@RequestBody RefactorModel refactorModel) {
-        String response = refactorService.sendDataToGenerator(refactorModel);
-        System.out.println("lololol" + refactorModel);
+        String gymProficency = refactorModel.getGymProficiency();
+        String response = refactorService.sendDataToGenerator(gymProficency);
+        System.out.println("lololol" + gymProficency);
         return ResponseEntity.ok(response);
     }
 

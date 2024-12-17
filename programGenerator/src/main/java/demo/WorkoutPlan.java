@@ -2,17 +2,20 @@ package demo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import demo.model.WorkoutModel;
+import demo.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Random;
 @Component
+@Service
 public class WorkoutPlan {
     @Autowired
     private RestTemplate restTemplate;
-
 
     private final Connection connection = new Connection();
     private final String ProgramGenerator = "http://localhost:8090/refactor/send-to-generator";
