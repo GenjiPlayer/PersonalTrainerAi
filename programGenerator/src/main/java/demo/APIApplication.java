@@ -1,13 +1,12 @@
-import demo.Connection;
-import demo.WorkoutPlan;
+package demo;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-WorkoutPlan workoutPlan = new WorkoutPlan();
-Connection connection = new Connection();
+@SpringBootApplication
+public class APIApplication {
 
-public void main(String[] args) {
-
-    connection.getExercises("");
-    workoutPlan.generatePlan("", "");
-    workoutPlan.printPlan();
+    public static void main(String[] args) {
+        SpringApplication.run(APIApplication.class, args);
+    }
 }

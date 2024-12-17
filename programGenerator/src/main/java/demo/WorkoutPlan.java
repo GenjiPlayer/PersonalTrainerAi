@@ -3,13 +3,14 @@ package demo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WorkoutPlan{
+public class WorkoutPlan {
 
-    Connection connection = new Connection();
-    String proficiency = "beginner";
+    private final Connection connection = new Connection();
+    private String proficiency = "beginner";
 
     public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};
     public static final String[] lower1 = {"glutes", "hamstrings", "calves"};
@@ -19,11 +20,67 @@ public class WorkoutPlan{
     public static final String[] pull = {"middle_back", "lats", "biceps"};
     public static final String[] legs = {"glutes", "quadriceps", "hamstrings", "calves"};
 
+    public void setProficiency(String proficiency) {
+        this.proficiency = proficiency;
+    }
 
-    public void generatePlan(String jsonResponse, String muscle) {
+    public String getWorkoutPlan() {
+        System.out.println("Proficiency: " + proficiency); // Debugging
+        StringBuilder workoutPlanOutput = new StringBuilder();
+
+        if ("intermediate".equalsIgnoreCase(proficiency) || "expert".equalsIgnoreCase(proficiency)) {
+            workoutPlanOutput.append("Intro to Training program here:\n")
+                    .append("-------------------------------\n")
+                    .append("=================PUSH DAY===============\n");
+            for (String muscle : push) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================PULL DAY===============\n");
+            for (String muscle : pull) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================LEG DAY===============\n");
+            for (String muscle : legs) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+
+        } else if ("beginner".equalsIgnoreCase(proficiency)) {
+            workoutPlanOutput.append("Intro to Training program here:\n")
+                    .append("-------------------------------\n")
+                    .append("=================Upper body day 1===============\n");
+            for (String muscle : upper1) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================Lower body day 1===============\n");
+            for (String muscle : lower1) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================Upper body day 2===============\n");
+            for (String muscle : upper2) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================Lower body day 2===============\n");
+            for (String muscle : lower2) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+        } else {
+            workoutPlanOutput.append("No proficiency detected in your profile");
+        }
+        return workoutPlanOutput.toString();
+    }
+
+    public String generatePlan(String jsonResponse, String muscle) {
+        StringBuilder result = new StringBuilder();
 
         if (jsonResponse == null || jsonResponse.isEmpty()) {
-            return;
+            return "No exercises found for muscle: " + muscle + "\n";
         }
 
         try {
@@ -38,7 +95,8 @@ public class WorkoutPlan{
                             .toList();
                 }
                 if (filteredExercises.isEmpty()) {
-                    System.out.println("No beginner exercises found for " + muscle + ". Falling back to intermediate difficulty.");
+                    result.append("No beginner exercises found for ").append(muscle)
+                            .append(". Falling back to intermediate difficulty.\n");
                     filteredExercises = exercises.stream()
                             .filter(exercise -> "Intermediate".equalsIgnoreCase(exercise.getDifficulty()))
                             .toList();
@@ -48,72 +106,21 @@ public class WorkoutPlan{
                     Random random = new Random();
                     Exercise randomExercise = filteredExercises.get(random.nextInt(filteredExercises.size()));
 
-                    System.out.println("Muscle: " + muscle);
-                    System.out.println("Exercise: " + randomExercise.getName());
-                    System.out.println("Difficulty: " + randomExercise.getDifficulty());
-                    System.out.println("Instructions: " + randomExercise.getInstructions());
-                    System.out.println();
+                    result.append("Muscle: ").append(muscle).append("\n")
+                            .append("Exercise: ").append(randomExercise.getName()).append("\n")
+                            .append("Difficulty: ").append(randomExercise.getDifficulty()).append("\n")
+                            .append("Instructions: ").append(randomExercise.getInstructions()).append("\n\n");
                 } else {
-                    System.out.println("No suitable exercises found for muscle: " + muscle);
+                    result.append("No suitable exercises found for muscle: ").append(muscle).append("\n");
                 }
             } else {
-                System.out.println("No exercises found for muscle: " + muscle);
+                result.append("No exercises found for muscle: ").append(muscle).append("\n");
             }
         } catch (Exception e) {
-            System.out.println("Error processing exercises for muscle: " + muscle);
+            result.append("Error processing exercises for muscle: ").append(muscle).append("\n");
             e.printStackTrace();
         }
-    }
 
-
-    public void printPlan(){
-
-        if (proficiency == "intermediate" || proficiency == "expert") {
-            System.out.println("Intro to Training program here: ///////////////////////");
-            System.out.println("-------------------------------");
-            System.out.println("-------------------------------");
-            System.out.println("-------------------------------");
-
-            System.out.println("===============PUSH DAY===============");
-            for (String muscle : push) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-            System.out.println("===============PULL DAY===============");
-            for (String muscle : pull) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-            System.out.println("===============LEG DAY===============");
-            for (String muscle : legs) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-        }else if(proficiency == "beginner"){
-            System.out.println("Intro to Training program here:");
-            System.out.println("-------------------------------");
-            System.out.println("-------------------------------");
-            System.out.println("-------------------------------");
-            System.out.println("===============Upper body day 1===============");
-            for (String muscle : upper1) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-            System.out.println("===============Lower body day 1===============");
-            for (String muscle : lower1) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-            System.out.println("===============Upper body day 2===============");
-            for (String muscle : upper2) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-            System.out.println("===============Lower body day 1===============");
-            for (String muscle : lower2) {
-                String jsonResponse = connection.getExercises(muscle);
-                generatePlan(jsonResponse, muscle);
-            }
-        }else System.out.println("No proficiency detected in your profile");
+        return result.toString();
     }
 }
