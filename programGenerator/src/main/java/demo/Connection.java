@@ -19,8 +19,6 @@ public class Connection {
             RestTemplate restTemplate = new RestTemplate();
             String url = BASE_URL + "?muscle=" + muscle;
 
-            RestTemplate restTemplate2 = new RestTemplate();
-
             HttpHeaders headers = new HttpHeaders();
             headers.set("X-Api-Key", API_KEY);
 

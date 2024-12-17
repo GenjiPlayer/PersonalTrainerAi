@@ -3,7 +3,6 @@ package demo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -71,24 +70,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
         } else {
-            workoutPlanOutput.append("Intro to Training program here:\n")
-                    .append("-------------------------------\n")
-                    .append("=================PUSH DAY===============\n");
-            for (String muscle : push) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-            workoutPlanOutput.append("=================PULL DAY===============\n");
-            for (String muscle : pull) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-            workoutPlanOutput.append("=================LEG DAY===============\n");
-            for (String muscle : legs) {
-                String jsonResponse = connection.getExercises(muscle);
-                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
-            }
-
+            System.out.println("proficiency is not beginner or intermediate. Or it is not found" + proficiency);
         }
         return workoutPlanOutput.toString();
     }
