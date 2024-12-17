@@ -19,7 +19,7 @@ public class RefactorService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String ProgramGenerator = "https://program-generator/Svein endpoint... ";
+    private final String ProgramGenerator = "http://localhost:8080/api/workout/generate";
 
     public String sendDataToGenerator(RefactorModel refactorModel) {
         try {
