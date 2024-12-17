@@ -12,6 +12,8 @@ spring:
           uri: http://localhost:8080
           predicates:
             - Path=/input/**
+          filters:
+            - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/common-fallback
 
         - id: health-check
           uri: http://localhost:8080/actuator/health
@@ -23,7 +25,7 @@ spring:
           predicates:
             - Path=/refactor/**
           filters:
-            - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/fallback
+            - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/common-fallback
 
       discovery:
         locator:
@@ -57,6 +59,9 @@ resilience4j:
 
     instances:
       refactorCircuitBreaker:
+        base-config: default
+        sliding-window-size: 5
+      inputCircuitBreaker:
         base-config: default
         sliding-window-size: 5
 
