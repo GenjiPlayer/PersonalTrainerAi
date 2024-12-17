@@ -71,7 +71,23 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
         } else {
-            workoutPlanOutput.append("No proficiency detected in your profile");
+            workoutPlanOutput.append("Intro to Training program here:\n")
+                    .append("-------------------------------\n")
+                    .append("=================PUSH DAY===============\n");
+            for (String muscle : push) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================PULL DAY===============\n");
+            for (String muscle : pull) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
+            workoutPlanOutput.append("=================LEG DAY===============\n");
+            for (String muscle : legs) {
+                String jsonResponse = connection.getExercises(muscle);
+                workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
+            }
 
         }
         return workoutPlanOutput.toString();
