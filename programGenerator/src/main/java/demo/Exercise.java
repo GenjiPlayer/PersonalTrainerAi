@@ -8,6 +8,7 @@ public class Exercise {
     private String difficulty;
     private String instructions;
 
+    // Getter and setter methods
     public String getName() {
         return name;
     }
@@ -30,10 +31,5 @@ public class Exercise {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
-    }
-
-    @Override
-    public String toString() {
-        return "Exercise: " + name + "\nDifficulty: " + difficulty + "\nInstructions: " + instructions;
     }
 }
