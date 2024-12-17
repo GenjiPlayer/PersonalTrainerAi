@@ -1,6 +1,10 @@
 spring:
+  application:
+    name: api-gateway
+
   main:
     web-application-type: reactive
+
   cloud:
     gateway:
       routes:
@@ -8,10 +12,53 @@ spring:
           uri: http://localhost:8080
           predicates:
             - Path=/input/**
+
         - id: health-check
           uri: http://localhost:8080/actuator/health
           predicates:
             - Path=/health
+
+        - id: refactor-route
+          uri: http://localhost:8090/refactor/**
+          predicates:
+            - Path=/refactor/**
+          filters:
+            - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/fallback
+
+      discovery:
+        locator:
+          enabled: true
+
+    consul:
+      discovery:
+        service-name: api-gateway
+        port: 8081
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health, info
+      health:
+        consul:
+          enabled: true
+        diskspace:
+          enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000ms
+
+    instances:
+      refactorCircuitBreaker:
+        base-config: default
+        sliding-window-size: 5
+
 server:
   port: 8081
-
