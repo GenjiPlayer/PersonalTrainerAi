@@ -28,6 +28,11 @@ public class WorkoutController {
         workoutRepository.save(requestBody);
         return ResponseEntity.ok(plan);
     }
-
+    @GetMapping("/generate")
+    public ResponseEntity<String> generateWorkoutPlanWithGet(@RequestParam String proficiency) {
+        workoutPlan.setProficiency(proficiency);
+        String workoutPlanResult = workoutPlan.getWorkoutPlan();
+        return ResponseEntity.ok(workoutPlanResult);
+    }
 }
 
