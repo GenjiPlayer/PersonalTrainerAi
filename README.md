@@ -1,5 +1,5 @@
 How to run the program:
--Do "npm run dev" in terminal
+-Do "npm run dev" in terminal</br>
 -Do "consul agent -dev" in terminal
 -Run APIApplication
 -Run ApiGatewayApplication
