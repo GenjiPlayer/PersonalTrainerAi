@@ -25,23 +25,9 @@ public class WorkoutController {
         workoutPlan.setProficiency(requestBody.getGymProficiency());
         System.out.println(requestBody);
         String plan = workoutPlan.getWorkoutPlan();
+        workoutRepository.save(requestBody);
         return ResponseEntity.ok(plan);
     }
-
-    @GetMapping("/generate")
-    public ResponseEntity<String> generateWorkoutPlanWithGet(@RequestParam String proficiency) {
-        workoutPlan.setProficiency(proficiency);
-        String workoutPlanResult = workoutPlan.getWorkoutPlan();
-        return ResponseEntity.ok(workoutPlanResult);
-    }
-
-    /*@GetMapping("/generate")
-    public ResponseEntity<String> getWorkoutPlan(@RequestBody Exercise exercise){
-        String proficiency = workoutPlan.getProficiency(exercise);
-        workoutPlan.setProficiency(proficiency);
-        String workoutPlanResult = workoutPlan.getWorkoutPlan();
-        return ResponseEntity.ok(workoutPlanResult);
-    }*/
 
 }
 

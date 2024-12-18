@@ -22,12 +22,6 @@ public class userController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<userInput> submitUserInputExternally(@RequestBody userInput userInput){
-        userInput saveUser = userService.saveInputExternal(userInput);
-        return ResponseEntity.ok(saveUser); //delete this function at some point
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<userInput>> getAllUsers(){
         List<userInput> allUsers = userService.fetchAllUserInput();
