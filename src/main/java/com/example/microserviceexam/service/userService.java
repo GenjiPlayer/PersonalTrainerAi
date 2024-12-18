@@ -20,15 +20,6 @@ public class userService implements userServiceImp {
 
     @Autowired
     private eventDispatch e;
-
-    @Override
-    public userInput saveInputExternal(userInput userInput) {
-        userInputRepo.save(userInput);
-        userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
-        e.send(userDTO);
-        return  userInput;       //kan også slettes etterhvert
-    }
-
     @Override
     public userInput saveInput(userInput userInput){
         userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());

@@ -1,7 +1,6 @@
 package org.example.datarefactor.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.datarefactor.dto.ProfDto;
 import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.repository.RefactorRepository;
@@ -18,7 +17,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class RefactorController {
 
-    private final List<RefactorModel> temporaryStorage = new ArrayList<>();
     @Autowired
     private RefactorService refactorService;
     @Autowired
@@ -47,15 +45,3 @@ public class RefactorController {
         return ResponseEntity.ok(enrichedData);
     }
 }
-
-       /* @PostMapping("/send-to-generator")
-    public ResponseEntity<RefactorDto> sendToGenerator(@RequestBody RefactorModel refactorModel) {
-        System.out.println("lololol" + response);
-        return ResponseEntity.ok(response);
-    }/*
-
-    @GetMapping
-    public ResponseEntity<List<RefactorModel>> getAllRefactoredData() {
-        return ResponseEntity.ok(temporaryStorage);
-    }
-} */
