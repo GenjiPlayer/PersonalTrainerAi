@@ -12,8 +12,12 @@ Program should now be ready for use</br>
 -Choose your prefered gym proficany</br>
 -Put in your age, height, weight, and goal weight</br>
 -Click submit</br>
--To check your workout plan you now have to go to postman and use this endpoint: http://localhost:8082/api/workout/generate?proficiency=intermediate</br>
-Postman should now display a workoutplan for your prefferd proficiancy. You can get a different workoutplan by changing proficiancy to begginer in the link.</br>
+-Multiple endpoints to test</br>
+GET http://localhost:8080/input/all
+GET http://localhost:8090/refactor/all
+GET http://localhost:8081/actuator/health
+GET http://localhost:8081/fallback
+all POST requests are ran through the website and communicate with eachother, their results are displayed in the service log box, included the entire workout program depending on a users proficiency
 
 ## User Stories:
 1. For Beginners:</br>
