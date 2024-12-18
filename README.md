@@ -12,8 +12,12 @@ Program should now be ready for use</br>
 -Choose your prefered gym proficany</br>
 -Put in your age, height, weight, and goal weight</br>
 -Click submit</br>
--To check your workout plan you now have to go to postman and use this endpoint: http://localhost:8082/api/workout/generate?proficiency=intermediate</br>
-Postman should now display a workoutplan for your prefferd proficiancy. You can get a different workoutplan by changing proficiancy to begginer in the link.</br>
+-Multiple endpoints to test</br>
+GET http://localhost:8080/input/all
+GET http://localhost:8090/refactor/all
+GET http://localhost:8081/actuator/health
+GET http://localhost:8081/fallback
+all POST requests are ran through the website and communicate with eachother, their results are displayed in the service console box, included the entire workout program depending on a users proficiency is printed here
 
 ## User Stories:
 1. For Beginners:</br>
@@ -35,11 +39,11 @@ This program ensures that anyone, regardless of their fitness level, can follow 
 https://api-ninjas.com/api/exercises
 
 ## Contributions:
-Benjamin: 
+Benjamin: task delegation, entire userInput service, API Gateway and Consul, fallback and health checks, bug fixing, rabbitmq configuration, refactor service fixing, workout service fixing, frontend api calls and design.
 </br>
-Sveinung:
+Sveinung: Worked on the programGenerator module, collecting from API and presenting the workout plan.
 </br>
-Ludvik:
+Ludvik: dataRefactor, connection between our microservices, bug fixing, help setting up parts of programGenerator 
 </br>
 Ole: README.md file, autentication/log in on website but as a group we decided not to have it, started the foodPlan but again as a group it was decided to not be used, pair programing with everyone.
 
