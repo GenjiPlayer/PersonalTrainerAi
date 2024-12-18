@@ -37,7 +37,7 @@ https://api-ninjas.com/api/exercises
 ## Contributions:
 Benjamin: 
 </br>
-Sveinung:
+Sveinung: Worked on the programGenerator module, collecting from API and presenting the workout plan.
 </br>
 Ludvik:
 </br>
