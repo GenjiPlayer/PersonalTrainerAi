@@ -19,7 +19,7 @@ public class WorkoutPlan {
     private RestTemplate restTemplate;
 
     private final Connection connection = new Connection();
-    private final String ProgramGenerator = "http://localhost:8090/refactor/send-to-generator";
+    private final String ProgramGenerator = "http://localhost:8081/refactor/send-to-generator";
     private String gymProficiency;
 
     public static final String[] upper1 = {"chest", "middle_back", "shoulders", "lats"};

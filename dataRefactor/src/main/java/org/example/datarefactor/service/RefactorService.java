@@ -1,8 +1,6 @@
 package org.example.datarefactor.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.datarefactor.dto.ProfDto;
-import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.repository.RefactorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ public class RefactorService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String ProgramGenerator = "http://localhost:8082/api/workout/generate";
+    private final String ProgramGenerator = "http://localhost:8081/api/workout/generate";
     @JsonIgnore
-    public String sendDataToGenerator(RefactorDto refactorDto) {
+    public String sendDataToGenerator(RefactorModel refactorDto) {
         try {
             String res = restTemplate.postForObject(ProgramGenerator, refactorDto, String.class);
             System.out.println("YAHOO!" + res);

@@ -10,7 +10,7 @@ public class inputClient implements inputClientImp {
 
     @Autowired
     private RestTemplate restTemplate;
-    private final String refactorService = "http://localhost:8090/refactor/enriched";
+    private final String refactorService = "http://localhost:8081/refactor/enriched";
 
     @Override
     public Object refactor(userDTO userdto) {
