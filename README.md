@@ -39,7 +39,7 @@ Benjamin: task delegation, entire userInput service, API Gateway and Consul, fal
 </br>
 Sveinung: Worked on the programGenerator module, collecting from API and presenting the workout plan.
 </br>
-Ludvik:
+Ludvik: dataRefactor, connection between our microservices, bug fixing, help setting up parts of programGenerator 
 </br>
 Ole: README.md file, autentication/log in on website but as a group we decided not to have it, started the foodPlan but again as a group it was decided to not be used, pair programing with everyone.
 
