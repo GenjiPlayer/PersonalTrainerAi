@@ -33,7 +33,7 @@ public class config {
     @Bean
     public SimpleMessageConverter converter() {
         SimpleMessageConverter converter = new SimpleMessageConverter();
-        converter.setAllowedListPatterns(List.of("com.example.microserviceexam.*"));
+        converter.setAllowedListPatterns(List.of("demo.*"));
         return converter;
     }
     @Bean
