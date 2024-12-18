@@ -1,19 +1,19 @@
-How to run the program:
+How to run the program:</br>
 -Do "npm run dev" in terminal</br>
--Do "consul agent -dev" in terminal
--Run APIApplication
--Run ApiGatewayApplication
--Run DataRefactorApplication
--Run MicroserviceExamApplication
-Program should now be ready for use
+-Do "consul agent -dev" in terminal</br>
+-Run APIApplication</br>
+-Run ApiGatewayApplication</br>
+-Run DataRefactorApplication</br>
+-Run MicroserviceExamApplication</br>
+Program should now be ready for use</br>
 
-How to use the program:
--Open http://localhost:3000/ in your web browser
--Choose your prefered gym proficany
--Put in your age, height, weight, and goal weight
--Click submit
--To check your workout plan you now have to go to postman and use this endpoint: http://localhost:8082/api/workout/generate?proficiency=intermediate
-Postman should now display a workoutplan for your prefferd proficiancy. You can get a different workoutplan by changing proficiancy to begginer in the link.
+How to use the program:</br>
+-Open http://localhost:3000/ in your web browser</br>
+-Choose your prefered gym proficany</br>
+-Put in your age, height, weight, and goal weight</br>
+-Click submit</br>
+-To check your workout plan you now have to go to postman and use this endpoint: http://localhost:8082/api/workout/generate?proficiency=intermediate</br>
+Postman should now display a workoutplan for your prefferd proficiancy. You can get a different workoutplan by changing proficiancy to begginer in the link.</br>
 
 User Stories:
 Our program is designed to help anyone looking to build muscle, whether they are completely new to exercise or experienced gym-goers seeking a fresh workout routine.
