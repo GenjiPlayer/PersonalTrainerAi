@@ -35,7 +35,7 @@ This program ensures that anyone, regardless of their fitness level, can follow 
 https://api-ninjas.com/api/exercises
 
 ## Contributions:
-Benjamin: 
+Benjamin: task delegation, entire userInput service, API Gateway and Consul, fallback and health checks, bug fixing, rabbitmq configuration, refactor service fixing, workout service fixing, frontend api calls and design.
 </br>
 Sveinung: Worked on the programGenerator module, collecting from API and presenting the workout plan.
 </br>
