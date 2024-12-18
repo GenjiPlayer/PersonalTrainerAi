@@ -94,7 +94,7 @@ public class WorkoutPlan {
                 workoutPlanOutput.append(generatePlan(jsonResponse, muscle));
             }
         } else {
-            System.out.println("proficiency is not beginner or intermediate. Or it is not found" + gymProficiency);
+            System.out.println("proficiency is not beginner, intermediate or expert. Or it is not found" + gymProficiency);
         }
         return workoutPlanOutput.toString();
     }
