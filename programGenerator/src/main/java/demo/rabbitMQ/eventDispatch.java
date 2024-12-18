@@ -17,6 +17,7 @@ public class eventDispatch {
 
     public WorkoutModel send(WorkoutModel model){
         rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, model);
+        System.out.println("YAHOOO!" + model);
         return model;
     }
 }
