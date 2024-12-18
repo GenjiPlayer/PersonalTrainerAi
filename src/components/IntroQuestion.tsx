@@ -19,7 +19,7 @@ export default function IntroQuestion({ onNext }) {
                     <option value="">Select Experience Level</option>
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
-                    <option value="professional">Professional</option>
+                    <option value="expert">Expert</option>
                 </select>
                 <button
                     onClick={handleNext}
