@@ -34,6 +34,14 @@ This program ensures that anyone, regardless of their fitness level, can follow 
 
 https://api-ninjas.com/api/exercises
 
+## Contributions:
+Benjamin: 
+</br>
+Sveinung:
+</br>
+Ludvik:
+</br>
+Ole: README.md file, autentication/log in on website but as a group we decided not to have it, started the foodPlan but again as a group it was decided to not be used, pair programing with everyone.
 
 ## Diagram:
 ![image](https://github.com/user-attachments/assets/aeee1f68-9909-4a6d-b50a-7834988c8668)
