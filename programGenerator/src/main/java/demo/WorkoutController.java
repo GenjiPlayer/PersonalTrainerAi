@@ -5,10 +5,14 @@ import demo.model.WorkoutModel;
 import demo.rabbitMQ.eventDispatch;
 import demo.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/workout")
@@ -30,15 +34,9 @@ public class WorkoutController {
         workoutPlan.setProficiency(requestBody.getGymProficiency());
         System.out.println(requestBody);
         e.send(requestBody);
-        String plan = workoutPlan.getWorkoutPlan();
         workoutRepository.save(requestBody);
+        String plan = workoutPlan.getWorkoutPlan();
         return ResponseEntity.ok(plan);
-    }
-    @GetMapping("/generate")
-    public ResponseEntity<String> generateWorkoutPlanWithGet(@RequestParam String proficiency) {
-        workoutPlan.setProficiency(proficiency);
-        String workoutPlanResult = workoutPlan.getWorkoutPlan();
-        return ResponseEntity.ok(workoutPlanResult);
     }
 }
 
