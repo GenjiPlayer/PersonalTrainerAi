@@ -17,7 +17,7 @@ GET http://localhost:8080/input/all
 GET http://localhost:8090/refactor/all
 GET http://localhost:8081/actuator/health
 GET http://localhost:8081/fallback
-all POST requests are ran through the website and communicate with eachother, their results are displayed in the service log box, included the entire workout program depending on a users proficiency
+all POST requests are ran through the website and communicate with eachother, their results are displayed in the service console box, included the entire workout program depending on a users proficiency is printed here
 
 ## User Stories:
 1. For Beginners:</br>
