@@ -19,6 +19,19 @@ GET http://localhost:8081/actuator/health
 GET http://localhost:8081/fallback
 all POST requests are ran through the website and communicate with eachother, their results are displayed in the service console box, included the entire workout program depending on a users proficiency is printed here
 
+-Additionally to test POST requests on postman, send the body requests like this: {
+  "gymProficiency": "beginner",
+  "age": "33",
+  "height": "176",
+  "goalWeight": "77",
+  "currentWeight": "90"
+}
+or with {
+"id": "1,
+"gymProficiency": "beginner",
+  "age": "33",
+} for refactoring data POST endpoint
+
 ## User Stories:
 1. For Beginners:</br>
     A person new to training will experience this app as an easy way to start working out and get a workout plan tailored to their beginner level.</br>
