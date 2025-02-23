@@ -13,6 +13,7 @@ import java.util.Optional;
 @RequestMapping("/input")
 @CrossOrigin(origins = "http://localhost:3000")
 public class userController {
+
     @Autowired
     private userService userService;
 
