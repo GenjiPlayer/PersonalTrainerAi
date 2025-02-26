@@ -16,33 +16,38 @@ spring:
         response-timeout: 10s
       routes:
         - id: input-route
-          uri: http://localhost:8080
+          uri: http://input:8080
           predicates:
             - Path=/input/**
           filters:
             - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/fallback
 
         - id: workout-route
-          uri: http://localhost:8082
+          uri: http://workout-service:8082
           predicates:
             - Path=/api/workout/**
           filters:
             - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/fallback
 
-        - id: health-check
-          uri: http://localhost:8080/actuator/health
+        - id: health-check-input
+          uri: http://input:8080/actuator/health
           predicates:
             - Path=/input/health
 
         - id: refactor-route
-          uri: http://localhost:8090/refactor/**
+          uri: http://refactor-service:8090/refactor/**
           predicates:
             - Path=/refactor/**
           filters:
             - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/fallback
 
         - id: refactor-health-check
-          uri: http://localhost:8090/actuator/health
+          uri: http://refactor-service:8090/actuator/health
+          predicates:
+            - Path=/refactor/health
+
+        - id: workout-health-check
+          uri: http://workout-service:8082/actuator/health
           predicates:
             - Path=/refactor/health
 
