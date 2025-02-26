@@ -5,6 +5,10 @@ spring:
   main:
     web-application-type: reactive
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
   cloud:
     gateway:
       httpclient:
@@ -84,3 +88,4 @@ resilience4j:
         timeout-duration: 30s
 server:
   port: 8081
+

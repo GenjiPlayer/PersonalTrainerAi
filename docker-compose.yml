@@ -1,0 +1,78 @@
+services:
+  consul:
+    image: hashicorp/consul:1.16.2
+    container_name: consul-server
+    ports:
+      - "8500:8500"
+    command: "agent -server -bootstrap -ui -client=0.0.0.0"
+    networks:
+      - app-network
+
+  api-gateway:
+    build:
+      context: ./
+    container_name: api-gateway
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONSUL_HOST=consul
+    depends_on:
+      - consul
+    networks:
+      - app-network
+
+  user-service:
+    build:
+      context: ./
+    container_name: input
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONSUL_HOST=consul
+    depends_on:
+      - consul
+    networks:
+      - app-network
+
+  workout-service:
+    build:
+      context: ./
+    container_name: workout-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONSUL_HOST=consul
+    depends_on:
+      - consul
+    networks:
+      - app-network
+
+  refactor-service:
+    build:
+      context: ./
+    container_name: refactor-service
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONSUL_HOST=consul
+    depends_on:
+      - consul
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

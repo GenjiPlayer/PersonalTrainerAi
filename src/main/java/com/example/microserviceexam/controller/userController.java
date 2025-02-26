@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/input")
-@CrossOrigin(origins = "http://localhost:3000")
 public class userController {
 
     @Autowired

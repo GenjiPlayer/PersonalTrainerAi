@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/workout")
+@CrossOrigin(origins = "*")
 public class WorkoutController {
 
     private final WorkoutPlan workoutPlan;
