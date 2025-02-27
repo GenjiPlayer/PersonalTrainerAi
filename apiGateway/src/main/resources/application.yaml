@@ -16,7 +16,7 @@ spring:
         response-timeout: 10s
       routes:
         - id: input-route
-          uri: http://input:8080
+          uri: http://user-service:8080
           predicates:
             - Path=/input/**
           filters:
@@ -59,6 +59,8 @@ spring:
       discovery:
         service-name: api-gateway
         port: 8081
+      host: consul-server
+      port: 8500
 
     management:
       endpoints:
@@ -91,6 +93,6 @@ resilience4j:
     instances:
       inputCircuitBreaker:
         timeout-duration: 30s
+
 server:
   port: 8081
-
