@@ -1,8 +1,10 @@
 package com.example.microserviceexam.dto;
 
+import com.example.microserviceexam.model.userInput;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import reactor.core.publisher.Mono;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,4 +29,5 @@ public class userDTO implements Serializable {
         this.currentWeight = currentWeight;
         this.goalWeight = goalWeight;
     }
+
 }
