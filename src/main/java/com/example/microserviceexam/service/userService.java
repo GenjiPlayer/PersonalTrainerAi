@@ -35,8 +35,8 @@ public class userService implements userServiceImp {
     }
 
     @Override
-    public  userInput updateUserValues(userInput userInput, Long userId){
-        userInput userDb = userInputRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    public userInput updateUserValues(userInput userInput, Long userId){
+        com.example.microserviceexam.model.userInput userDb = userInputRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         userDb.setAge(userInput.getAge());
         userDb.setCurrentWeight(userInput.getCurrentWeight());
         userDb.setHeight(userInput.getHeight());

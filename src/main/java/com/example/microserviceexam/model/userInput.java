@@ -44,4 +44,52 @@ public class userInput {
     @Min(value = 30, message = "cant be less than 30")
     @Max(value = 200, message = "cant be more than 200")
     private Double goalWeight;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotNull(message = "cant be 0") String getGymProficiency() {
+        return gymProficiency;
+    }
+
+    public void setGymProficiency(@NotNull(message = "cant be 0") String gymProficiency) {
+        this.gymProficiency = gymProficiency;
+    }
+
+    public @NotNull(message = "cant be 0") @Min(value = 30, message = "cant be less than 30") @Max(value = 200, message = "cant be more than 200") Double getCurrentWeight() {
+        return currentWeight;
+    }
+
+    public void setCurrentWeight(@NotNull(message = "cant be 0") @Min(value = 30, message = "cant be less than 30") @Max(value = 200, message = "cant be more than 200") Double currentWeight) {
+        this.currentWeight = currentWeight;
+    }
+
+    public @NotNull(message = "cant be null") @Min(value = 18, message = "cant be less than 18") @Max(value = 100, message = "cant be more than 100") Integer getAge() {
+        return age;
+    }
+
+    public void setAge(@NotNull(message = "cant be null") @Min(value = 18, message = "cant be less than 18") @Max(value = 100, message = "cant be more than 100") Integer age) {
+        this.age = age;
+    }
+
+    public @NotNull(message = "cant be null") @Min(value = 100, message = "cant be less than 100") @Max(value = 250, message = "cant be more than 200") Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(@NotNull(message = "cant be null") @Min(value = 100, message = "cant be less than 100") @Max(value = 250, message = "cant be more than 200") Integer height) {
+        this.height = height;
+    }
+
+    public @NotNull(message = "cant be null") @Min(value = 30, message = "cant be less than 30") @Max(value = 200, message = "cant be more than 200") Double getGoalWeight() {
+        return goalWeight;
+    }
+
+    public void setGoalWeight(@NotNull(message = "cant be null") @Min(value = 30, message = "cant be less than 30") @Max(value = 200, message = "cant be more than 200") Double goalWeight) {
+        this.goalWeight = goalWeight;
+    }
 }

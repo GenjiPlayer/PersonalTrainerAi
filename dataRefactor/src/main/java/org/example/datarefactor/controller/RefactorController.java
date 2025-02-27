@@ -38,7 +38,7 @@ public class RefactorController {
     @PostMapping("/enriched")
     public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
-        RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
+        RefactorDto enrichedData = new RefactorDto(savedModel, (Object) ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
         String send = refactorService.sendDataToGenerator(savedModel);
         System.out.println("Sent to svein :3" + send);

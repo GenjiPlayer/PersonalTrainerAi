@@ -18,7 +18,7 @@ public class userController {
 
     @PostMapping("/submit")
     public ResponseEntity<userInput> submitUserInput(@RequestBody userInput userInput){
-        userInput savedUser = userService.saveInput(userInput);
+        com.example.microserviceexam.model.userInput savedUser = userService.saveInput(userInput);
         return ResponseEntity.ok(savedUser);
     }
 
@@ -36,7 +36,7 @@ public class userController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<userInput> updateUserInput(@RequestBody userInput userInput, @PathVariable Long id){
-        userInput updateUser = userService.updateUserValues(userInput, id);
+        com.example.microserviceexam.model.userInput updateUser = userService.updateUserValues(userInput, id);
         return ResponseEntity.ok(updateUser);
     }
 
