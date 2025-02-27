@@ -17,31 +17,31 @@ public class userController {
     private userService userService;
 
     @PostMapping("/submit")
-    public ResponseEntity<userInput> submitUserInput(@RequestBody userInput userInput){
-        userInput savedUser = userService.saveInput(userInput);
+    public ResponseEntity<userInput> submitUserInput(@RequestBody userInput userInput) {
+        com.example.microserviceexam.model.userInput savedUser = userService.saveInput(userInput);
         return ResponseEntity.ok(savedUser);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<userInput>> getAllUsers(){
+    public ResponseEntity<List<userInput>> getAllUsers() {
         List<userInput> allUsers = userService.fetchAllUserInput();
         return ResponseEntity.ok(allUsers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<userInput>> getSingleUser(@PathVariable Long id){
+    public ResponseEntity<Optional<userInput>> getSingleUser(@PathVariable Long id) {
         Optional<userInput> singleUser = userService.fetchSingleUser(id);
         return ResponseEntity.ok(singleUser);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<userInput> updateUserInput(@RequestBody userInput userInput, @PathVariable Long id){
-        userInput updateUser = userService.updateUserValues(userInput, id);
+    public ResponseEntity<userInput> updateUserInput(@RequestBody userInput userInput, @PathVariable Long id) {
+        com.example.microserviceexam.model.userInput updateUser = userService.updateUserValues(userInput, id);
         return ResponseEntity.ok(updateUser);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }

@@ -5,14 +5,8 @@ import demo.model.WorkoutModel;
 import demo.rabbitMQ.eventDispatch;
 import demo.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/workout")
@@ -29,6 +23,7 @@ public class WorkoutController {
         this.workoutRepository = workoutRepository;
         this.workoutPlan = workoutPlan;
     }
+
     @JsonIgnore
     @PostMapping("/generate")
     public ResponseEntity<String> generateWorkoutPlan(@RequestBody WorkoutModel requestBody) {

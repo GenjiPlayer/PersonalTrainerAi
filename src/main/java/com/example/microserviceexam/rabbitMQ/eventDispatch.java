@@ -15,7 +15,7 @@ public class eventDispatch {
     @Value("${input.anything.routing-key}")
     private String inputAnythingRoutingKey;
 
-    public userDTO send(userDTO userDTO){
+    public userDTO send(userDTO userDTO) {
         rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, userDTO);
         return userDTO;
     }

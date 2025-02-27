@@ -20,6 +20,7 @@ public class RefactorService {
     private RestTemplate restTemplate;
 
     private final String ProgramGenerator = "http://localhost:8081/api/workout/generate";
+
     @JsonIgnore
     public String sendDataToGenerator(RefactorModel refactorDto) {
         try {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class consumer {
     @RabbitListener(queues = "${input.queue}")
-    public void recievedPayload(WorkoutModel workoutModel){
+    public void recievedPayload(WorkoutModel workoutModel) {
         System.out.println("YIPPIIEIIEIEIEIEIEI" + workoutModel);
     }
 

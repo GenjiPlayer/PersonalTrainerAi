@@ -8,5 +8,18 @@ import lombok.Data;
 public class Exercise {
     private String name;
     private String difficulty;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
     private String instructions;
 }

@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JSONConfig {
-@Bean
-    public Module hibernateModule(){
-    return new Hibernate5Module();
-}
+    @Bean
+    public Module hibernateModule() {
+        return new Hibernate5Module();
+    }
 }

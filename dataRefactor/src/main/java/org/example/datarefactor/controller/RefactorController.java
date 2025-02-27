@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,11 +33,12 @@ public class RefactorController {
         RefactorModel data = refactorService.getDataById(id);
         return ResponseEntity.ok(data);
     }
+
     @JsonIgnore
     @PostMapping("/enriched")
     public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
-        RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
+        RefactorDto enrichedData = new RefactorDto(savedModel, (Object) ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
         String send = refactorService.sendDataToGenerator(savedModel);
         System.out.println("Sent to svein :3" + send);

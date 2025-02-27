@@ -13,6 +13,7 @@ public class webConfig implements WebMvcConfigurer {
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
         resolvers.add(new LoggingHandlerExceptionResolver());
     }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

@@ -15,7 +15,7 @@ public class eventDispatch {
     @Value("${input.anything.routing-key}")
     private String inputAnythingRoutingKey;
 
-    public WorkoutModel send(WorkoutModel model){
+    public WorkoutModel send(WorkoutModel model) {
         rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, model);
         System.out.println("YAHOOO!" + model);
         return model;

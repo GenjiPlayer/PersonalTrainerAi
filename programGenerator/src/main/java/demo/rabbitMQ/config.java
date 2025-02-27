@@ -8,13 +8,12 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
 @Configuration
 public class config {
     @Bean
-    public MessageHandlerMethodFactory messageHandlerMethodFactory(){
+    public MessageHandlerMethodFactory messageHandlerMethodFactory() {
         DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
         final MappingJackson2MessageConverter jsonConverter = new MappingJackson2MessageConverter();
         jsonConverter.getObjectMapper().registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
@@ -36,19 +35,19 @@ public class config {
         converter.setAllowedListPatterns(List.of("demo.*"));
         return converter;
     }
+
     @Bean
-    public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory){
+    public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
     }
 
     @Bean
-    public TopicExchange inputExchange(@org.springframework.beans.factory.annotation.Value("${input.exchange}") final String exchangeName)
-    {
+    public TopicExchange inputExchange(@org.springframework.beans.factory.annotation.Value("${input.exchange}") final String exchangeName) {
         return new TopicExchange(exchangeName);
     }
 
     @Bean
-    public Queue inputQueue (@org.springframework.beans.factory.annotation.Value("${input.queue}") final String queueName){
+    public Queue inputQueue(@org.springframework.beans.factory.annotation.Value("${input.queue}") final String queueName) {
         return new Queue(queueName, true);
     }
 

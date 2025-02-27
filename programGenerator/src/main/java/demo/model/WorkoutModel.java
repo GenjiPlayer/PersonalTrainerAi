@@ -1,13 +1,15 @@
 package demo.model;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,10 +20,16 @@ public class WorkoutModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String gymProficiency;
 
-    @Column(nullable = false)
     private Integer age;
 
+
+    public String getGymProficiency() {
+        return gymProficiency;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
 }
