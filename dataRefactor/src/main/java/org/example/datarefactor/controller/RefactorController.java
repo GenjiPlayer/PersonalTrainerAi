@@ -1,5 +1,6 @@
 package org.example.datarefactor.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.example.datarefactor.repository.RefactorRepository;
@@ -8,19 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/refactor")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class RefactorController {
 
-    private final List<RefactorModel> temporaryStorage = new ArrayList<>();
     @Autowired
     private RefactorService refactorService;
     @Autowired
     private RefactorRepository refactorRepository;
+    private final String ProgramGenerator = "http://localhost:8081/refactor/send-to-generator";
+
     @GetMapping("/all")
     public ResponseEntity<List<RefactorModel>> getAllData() {
         List<RefactorModel> allData = refactorService.getAllData();
@@ -33,24 +34,14 @@ public class RefactorController {
         return ResponseEntity.ok(data);
     }
 
+    @JsonIgnore
     @PostMapping("/enriched")
-    public ResponseEntity<List<RefactorDto>> getEnrichedData(@RequestBody RefactorModel refactorModel) {
+    public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
-        List<RefactorModel> allData = refactorService.getAllData();
-        List<RefactorDto> enrichedData = allData.stream()
-                .map(data -> {
-                    String parameter = data.getGymProficiency();
-                    Object exerApiData = refactorService.getApiData(parameter);
-                    return new RefactorDto(data, exerApiData);
-                })
-                .toList();
+        RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
-
+        String send = refactorService.sendDataToGenerator(savedModel);
+        System.out.println("Sent to svein :3" + send);
         return ResponseEntity.ok(enrichedData);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<RefactorModel>> getAllRefactoredData() {
-        return ResponseEntity.ok(temporaryStorage);
     }
 }

@@ -1,15 +1,15 @@
 package com.example.microserviceexam.dto;
 
-import lombok.AllArgsConstructor;
+import com.example.microserviceexam.model.userInput;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Data
 public class userDTO implements Serializable {
@@ -21,4 +21,13 @@ public class userDTO implements Serializable {
     private Integer height;
     private Double currentWeight;
     private Double goalWeight;
+
+    public userDTO(String gymProficiency, Integer age, Integer height, Double currentWeight, Double goalWeight) {
+        this.gymProficiency = gymProficiency;
+        this.age = age;
+        this.height = height;
+        this.currentWeight = currentWeight;
+        this.goalWeight = goalWeight;
+    }
+
 }

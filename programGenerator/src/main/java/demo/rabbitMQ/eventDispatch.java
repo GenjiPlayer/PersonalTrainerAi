@@ -1,6 +1,6 @@
-package com.example.microserviceexam.rabbitMQ;
+package demo.rabbitMQ;
 
-import com.example.microserviceexam.dto.userDTO;
+import demo.model.WorkoutModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +15,9 @@ public class eventDispatch {
     @Value("${input.anything.routing-key}")
     private String inputAnythingRoutingKey;
 
-    public userDTO send(userDTO userDTO) {
-        rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, userDTO);
-        return userDTO;
+    public WorkoutModel send(WorkoutModel model) {
+        rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, model);
+        System.out.println("YAHOOO!" + model);
+        return model;
     }
 }

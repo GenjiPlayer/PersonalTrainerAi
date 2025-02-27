@@ -1,28 +1,27 @@
 package com.example.microserviceexam.client;
+
 import com.example.microserviceexam.dto.userDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
 public class inputClient implements inputClientImp {
 
-    @Autowired
-    private RestTemplate restTemplate;
-    private final String refactorService = "http://localhost:8090/refactor/enriched";
+    private final WebClient webClient;
 
-    @Override
-    public Object refactor(userDTO userdto) {
-        try{
-            Object res = restTemplate.postForObject(refactorService, userdto, Object.class);
-            System.out.println("YIPPIE" + res);
-            return res;
-        } catch (Exception e) {
-            System.out.println("womp womp" + e.getMessage());
-        }
-        return null;
+    public inputClient(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8081").build();
     }
 
+    @Override
+    public Mono<Object> refactor(userDTO userdto) {
+        return webClient.post()
+                .uri("/refactor/enriched")
+                .bodyValue(userdto)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .doOnSuccess(response -> System.out.println("YIPPIE " + response))
+                .doOnError(error -> System.out.println("womp womp " + error.getMessage()));
+    }
 }
-

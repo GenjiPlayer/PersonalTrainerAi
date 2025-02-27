@@ -1,4 +1,4 @@
-package com.example.microserviceexam.rabbitMQ;
+package demo.rabbitMQ;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class config {
     @Bean
     public SimpleMessageConverter converter() {
         SimpleMessageConverter converter = new SimpleMessageConverter();
-        converter.setAllowedListPatterns(List.of("com.example.microserviceexam.*"));
+        converter.setAllowedListPatterns(List.of("demo.*"));
         return converter;
     }
 
@@ -57,9 +56,5 @@ public class config {
         return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
 }

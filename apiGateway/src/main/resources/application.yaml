@@ -5,25 +5,51 @@ spring:
   main:
     web-application-type: reactive
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 100000
+        response-timeout: 10s
       routes:
         - id: input-route
-          uri: http://localhost:8080
+          uri: http://user-service:8080
           predicates:
             - Path=/input/**
+          filters:
+            - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/fallback
 
-        - id: health-check
-          uri: http://localhost:8080/actuator/health
+        - id: workout-route
+          uri: http://workout-service:8082
           predicates:
-            - Path=/health
+            - Path=/api/workout/**
+          filters:
+            - CircuitBreaker=name=inputCircuitBreaker, fallbackUri=/fallback
+
+        - id: health-check-input
+          uri: http://input:8080/actuator/health
+          predicates:
+            - Path=/input/health
 
         - id: refactor-route
-          uri: http://localhost:8090/refactor/**
+          uri: http://refactor-service:8090/refactor/**
           predicates:
             - Path=/refactor/**
           filters:
             - CircuitBreaker=name=refactorCircuitBreaker, fallbackUri=/fallback
+
+        - id: refactor-health-check
+          uri: http://refactor-service:8090/actuator/health
+          predicates:
+            - Path=/refactor/health
+
+        - id: workout-health-check
+          uri: http://workout-service:8082/actuator/health
+          predicates:
+            - Path=/refactor/health
 
       discovery:
         locator:
@@ -33,6 +59,8 @@ spring:
       discovery:
         service-name: api-gateway
         port: 8081
+      host: consul-server
+      port: 8500
 
     management:
       endpoints:
@@ -54,11 +82,17 @@ resilience4j:
         sliding-window-size: 10
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10000ms
-
     instances:
-      refactorCircuitBreaker:
+      inputCircuitBreaker:
         base-config: default
         sliding-window-size: 5
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 10s
+    instances:
+      inputCircuitBreaker:
+        timeout-duration: 30s
 
 server:
   port: 8081

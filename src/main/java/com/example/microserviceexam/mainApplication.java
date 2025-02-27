@@ -1,10 +1,13 @@
-package com.example.foodProgram;
+package com.example.microserviceexam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-@SpringBootApplication
 
-public class foodProgramApplication {
+@SpringBootApplication
+public class mainApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(foodProgramApplication.class, args);    }
+        SpringApplication.run(mainApplication.class, args);
+    }
+
 }
