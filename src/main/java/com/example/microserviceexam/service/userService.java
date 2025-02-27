@@ -1,11 +1,12 @@
 package com.example.microserviceexam.service;
+
+import com.example.microserviceexam.client.inputClient;
 import com.example.microserviceexam.dto.userDTO;
 import com.example.microserviceexam.model.userInput;
 import com.example.microserviceexam.rabbitMQ.eventDispatch;
 import com.example.microserviceexam.repo.userInputRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.microserviceexam.client.inputClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +21,9 @@ public class userService implements userServiceImp {
 
     @Autowired
     private eventDispatch e;
+
     @Override
-    public userInput saveInput(userInput userInput){
+    public userInput saveInput(userInput userInput) {
         userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
         e.send(userDTO);
         userInputRepo.save(userInput);
@@ -30,12 +32,12 @@ public class userService implements userServiceImp {
     }
 
     @Override
-    public List<userInput> fetchAllUserInput(){
+    public List<userInput> fetchAllUserInput() {
         return userInputRepo.findAll();
     }
 
     @Override
-    public userInput updateUserValues(userInput userInput, Long userId){
+    public userInput updateUserValues(userInput userInput, Long userId) {
         com.example.microserviceexam.model.userInput userDb = userInputRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         userDb.setAge(userInput.getAge());
         userDb.setCurrentWeight(userInput.getCurrentWeight());
@@ -46,9 +48,10 @@ public class userService implements userServiceImp {
     }
 
     @Override
-    public void deleteUserById(Long userId){
+    public void deleteUserById(Long userId) {
         userInputRepo.deleteById(userId);
     }
+
     @Override
     public Optional<userInput> fetchSingleUser(Long userId) {
         return userInputRepo.findById(userId);

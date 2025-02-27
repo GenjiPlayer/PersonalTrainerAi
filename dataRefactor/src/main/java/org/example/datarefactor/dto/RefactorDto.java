@@ -1,5 +1,8 @@
 package org.example.datarefactor.dto;
-import lombok.*;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.datarefactor.model.RefactorModel;
 
 import java.io.Serial;

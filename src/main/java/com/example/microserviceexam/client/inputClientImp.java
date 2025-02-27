@@ -4,5 +4,5 @@ import com.example.microserviceexam.dto.userDTO;
 
 public interface inputClientImp {
 
-  Object refactor(userDTO userDTO);
+    Object refactor(userDTO userDTO);
 }

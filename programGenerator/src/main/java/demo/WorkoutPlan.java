@@ -1,10 +1,7 @@
 package demo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.model.WorkoutModel;
-import demo.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Random;
+
 @Component
 @Service
 public class WorkoutPlan {
@@ -108,7 +106,8 @@ public class WorkoutPlan {
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<Exercise> exercises = objectMapper.readValue(jsonResponse, new TypeReference<List<Exercise>>() {});
+            List<Exercise> exercises = objectMapper.readValue(jsonResponse, new TypeReference<List<Exercise>>() {
+            });
 
             if (exercises != null && !exercises.isEmpty()) {
                 List<Exercise> filteredExercises = exercises;
