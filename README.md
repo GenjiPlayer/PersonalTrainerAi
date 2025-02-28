@@ -1,10 +1,7 @@
 ## How to run the program:</br>
+-Do mvn clean package in all the folders with a POM file, so all folders and the root </br>
+-Do docker-compose up --build -d</br>
 -Do "npm run dev" in terminal</br>
--Do "consul agent -dev" in terminal</br>
--Run APIApplication</br>
--Run ApiGatewayApplication</br>
--Run DataRefactorApplication</br>
--Run MicroserviceExamApplication</br>
 Program should now be ready for use</br>
 
 ## How to use the program:</br>
@@ -13,10 +10,13 @@ Program should now be ready for use</br>
 -Put in your age, height, weight, and goal weight</br>
 -Click submit</br>
 -Multiple endpoints to test</br>
-GET http://localhost:8080/input/all
-GET http://localhost:8090/refactor/all
-GET http://localhost:8081/actuator/health
-GET http://localhost:8081/fallback
+GET http://localhost:8081/input/all</br>
+GET http://localhost:8081/refactor/all</br>
+GET http://localhost:8081/actuator/health</br>
+GET http://localhost:8081/fallback</br>
+POST http://localhost:8081/input/submit</br>
+POST http://localhost:8081/refactor/enriched</br>
+POST http://localhost:8081/api/workout/generate</br>
 all POST requests are ran through the website and communicate with eachother, their results are displayed in the service console box, included the entire workout program depending on a users proficiency is printed here
 
 -Additionally to test POST requests on postman, send the body requests like this: {
