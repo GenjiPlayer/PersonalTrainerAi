@@ -1,18 +1,17 @@
 package com.example.microserviceexam.service;
 
 import com.example.microserviceexam.model.userInput;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface userServiceImp {
-    userInput saveInput(userInput input);
+    Mono<userInput> saveInput(userInput input);
 
-    List<userInput> fetchAllUserInput();
+    Flux<userInput> fetchAllUserInput();
 
-    userInput updateUserValues(userInput userInput, Long userId);
+    Mono<userInput> updateUserValues(userInput userInput, Long userId);
 
-    void deleteUserById(Long userId);
+    Mono<Void> deleteUserById(Long userId);
 
-    Optional<userInput> fetchSingleUser(Long id);
+    Mono<userInput> fetchSingleUser(Long id);
 }

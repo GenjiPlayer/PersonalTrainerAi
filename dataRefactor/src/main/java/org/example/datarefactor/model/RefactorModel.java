@@ -22,4 +22,7 @@ public class RefactorModel {
 
     @Column(nullable = false)
     private Integer age;
+
+    public RefactorModel(Long id, String gymProficiency) {
+    }
 }

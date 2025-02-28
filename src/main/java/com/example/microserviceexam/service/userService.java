@@ -1,15 +1,15 @@
 package com.example.microserviceexam.service;
 
-import com.example.microserviceexam.client.inputClient;
 import com.example.microserviceexam.dto.userDTO;
 import com.example.microserviceexam.model.userInput;
 import com.example.microserviceexam.rabbitMQ.eventDispatch;
-import com.example.microserviceexam.repo.userInputRepo;
+import com.example.microserviceexam.service.userServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import com.example.microserviceexam.client.inputClient;
+import com.example.microserviceexam.repo.userInputRepo;
 
 @Service
 public class userService implements userServiceImp {
@@ -18,43 +18,57 @@ public class userService implements userServiceImp {
     private userInputRepo userInputRepo;
 
     @Autowired
-    private inputClient inputClient;
-
-    @Autowired
     private eventDispatch e;
 
     @Override
-    public userInput saveInput(userInput userInput) {
-        userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
-        e.send(userDTO);
-        userInputRepo.save(userInput);
-        inputClient.refactor(userDTO);
-        return userInput;
+    public Mono<userInput> saveInput(userInput userInput) {
+        System.out.println("Saving user input: " + userInput);
+        return Mono.fromCallable(() -> {
+                    userInput savedUser = userInputRepo.save(userInput).block();
+                    System.out.println("User saved successfully: " + savedUser);
+                    userDTO userDTO = new userDTO(
+                            savedUser.getGymProficiency(),
+                            savedUser.getAge(),
+                            savedUser.getHeight(),
+                            savedUser.getCurrentWeight(),
+                            savedUser.getGoalWeight()
+                    );
+                    e.send(userDTO);
+                    return savedUser;
+                })
+                .onErrorResume(error -> {
+                    System.err.println("Error saving user: " + error.getMessage());
+                    return Mono.error(error);
+                });
     }
 
     @Override
-    public List<userInput> fetchAllUserInput() {
+    public Flux<userInput> fetchAllUserInput() {
         return userInputRepo.findAll();
     }
 
     @Override
-    public userInput updateUserValues(userInput userInput, Long userId) {
-        com.example.microserviceexam.model.userInput userDb = userInputRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        userDb.setAge(userInput.getAge());
-        userDb.setCurrentWeight(userInput.getCurrentWeight());
-        userDb.setHeight(userInput.getHeight());
-        userDb.setGoalWeight(userInput.getGoalWeight());
-        userDb.setGymProficiency(userInput.getGymProficiency());
-        return userInputRepo.save(userDb);
+    public Mono<userInput> updateUserValues(userInput userInput, Long userId) {
+        return userInputRepo.findById(userId)
+                .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+                .flatMap(userDb -> {
+                    userDb.setAge(userInput.getAge());
+                    userDb.setCurrentWeight(userInput.getCurrentWeight());
+                    userDb.setHeight(userInput.getHeight());
+                    userDb.setGoalWeight(userInput.getGoalWeight());
+                    userDb.setGymProficiency(userInput.getGymProficiency());
+                    return userInputRepo.save(userDb);
+                });
     }
 
     @Override
-    public void deleteUserById(Long userId) {
-        userInputRepo.deleteById(userId);
+    public Mono<Void> deleteUserById(Long userId) {
+        return userInputRepo.deleteById(userId);
     }
 
     @Override
-    public Optional<userInput> fetchSingleUser(Long userId) {
-        return userInputRepo.findById(userId);
+    public Mono<userInput> fetchSingleUser(Long userId) {
+        return userInputRepo.findById(userId)
+                .switchIfEmpty(Mono.error(new RuntimeException("User not found")));
     }
 }

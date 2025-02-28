@@ -10,13 +10,22 @@ import org.springframework.stereotype.Component;
 public class eventDispatch {
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
     @Value("${input.exchange}")
     private String inputExchange;
+
     @Value("${input.anything.routing-key}")
     private String inputAnythingRoutingKey;
 
-    public userDTO send(userDTO userDTO) {
-        rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, userDTO);
-        return userDTO;
+    public void send(userDTO userDTO) {
+        try {
+            rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, userDTO, message -> {
+                message.getMessageProperties().setContentType("application/json");
+                return message;
+            });
+            System.out.println("Message sent: " + userDTO);
+        } catch (Exception e) {
+            System.err.println("Error while sending message: " + e.getMessage());
+        }
     }
 }

@@ -14,12 +14,12 @@ import java.io.Serializable;
 public class RefactorDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private RefactorModel refactorData;
-    private Object apiData;
+    private String gymProficiency;
+    private Long id;
 
-    // Explicitly define the constructor
-    public RefactorDto(RefactorModel refactorData, Object apiData) {
-        this.refactorData = refactorData;
-        this.apiData = apiData;
+
+    public RefactorDto(String gymProficiency, Long id) {
+        this.gymProficiency = gymProficiency;
+        this.id = id;
     }
 }

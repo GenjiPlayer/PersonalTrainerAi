@@ -1,5 +1,6 @@
 package demo.rabbitMQ;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.model.WorkoutModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,18 @@ public class eventDispatch {
     private String inputExchange;
     @Value("${input.anything.routing-key}")
     private String inputAnythingRoutingKey;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    public WorkoutModel send(WorkoutModel model) {
-        rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, model);
-        System.out.println("YAHOOO!" + model);
-        return model;
+    public void send(WorkoutModel workoutModel) {
+        try {
+            String json = objectMapper.writeValueAsString(workoutModel);
+            rabbitTemplate.convertAndSend(inputExchange, inputAnythingRoutingKey, json, message -> {
+                message.getMessageProperties().setContentType("application/json");
+                return message;
+            });
+        } catch (Exception e) {
+            System.err.println("Error while sending message: " + e.getMessage());
+        }
     }
 }

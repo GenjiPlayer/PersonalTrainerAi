@@ -1,13 +1,12 @@
 package com.example.microserviceexam.controller;
+
 import com.example.microserviceexam.model.userInput;
 import com.example.microserviceexam.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/input")
@@ -17,32 +16,38 @@ public class userController {
     private userService userService;
 
     @PostMapping("/submit")
-    public ResponseEntity<userInput> submitUserInput(@RequestBody userInput userInput) {
-        com.example.microserviceexam.model.userInput savedUser = userService.saveInput(userInput);
-        return ResponseEntity.ok(savedUser);
+    public Mono<ResponseEntity<userInput>> submitUserInput(@RequestBody userInput userInput) {
+        System.out.println("Received user input: " + userInput);
+        return userService.saveInput(userInput)
+                .map(ResponseEntity::ok)
+                .onErrorResume(error -> {
+                    System.err.println("Error saving user input: " + error.getMessage());
+                    return Mono.just(ResponseEntity.badRequest().build());
+                });
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<userInput>> getAllUsers() {
-        List<userInput> allUsers = userService.fetchAllUserInput();
-        return ResponseEntity.ok(allUsers);
+    public Flux<userInput> getAllUsers() {
+        return userService.fetchAllUserInput();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<userInput>> getSingleUser(@PathVariable Long id) {
-        Optional<userInput> singleUser = userService.fetchSingleUser(id);
-        return ResponseEntity.ok(singleUser);
+    public Mono<ResponseEntity<userInput>> getSingleUser(@PathVariable Long id) {
+        return userService.fetchSingleUser(id)
+                .map(ResponseEntity::ok)
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<userInput> updateUserInput(@RequestBody userInput userInput, @PathVariable Long id) {
-        com.example.microserviceexam.model.userInput updateUser = userService.updateUserValues(userInput, id);
-        return ResponseEntity.ok(updateUser);
+    public Mono<ResponseEntity<userInput>> updateUserInput(@RequestBody userInput userInput, @PathVariable Long id) {
+        return userService.updateUserValues(userInput, id)
+                .map(ResponseEntity::ok)
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.noContent().build();
+    public Mono<ResponseEntity<Void>> deleteUser(@PathVariable Long id) {
+        return userService.deleteUserById(id)
+                .then(Mono.just(ResponseEntity.noContent().build()));
     }
 }

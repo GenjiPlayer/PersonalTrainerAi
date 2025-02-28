@@ -1,5 +1,6 @@
 package org.example.datarefactor.repository;
 
+import org.example.datarefactor.dto.RefactorDto;
 import org.example.datarefactor.model.RefactorModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
