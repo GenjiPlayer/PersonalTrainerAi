@@ -22,4 +22,7 @@ public class RefactorDto implements Serializable {
         this.refactorData = refactorData;
         this.apiData = apiData;
     }
+
+    public RefactorDto(RefactorModel savedModel) {
+    }
 }
