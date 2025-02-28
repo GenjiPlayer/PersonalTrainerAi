@@ -21,7 +21,7 @@ public class inputClient implements inputClientImp {
                 .bodyValue(userdto)
                 .retrieve()
                 .bodyToMono(Object.class)
-                .doOnSuccess(response -> System.out.println("YIPPIE " + response))
-                .doOnError(error -> System.out.println("womp womp " + error.getMessage()));
+                .doOnSuccess(response -> System.out.println("efactor service succeeded: " + response))
+                .doOnError(error -> System.out.println("Refactor service failed: " + error.getMessage()));
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/refactor")
@@ -34,14 +35,18 @@ public class RefactorController {
         return ResponseEntity.ok(data);
     }
 
-    @JsonIgnore
     @PostMapping("/enriched")
     public ResponseEntity<RefactorDto> getEnrichedData(@RequestBody RefactorModel refactorModel) {
         RefactorModel savedModel = refactorRepository.save(refactorModel);
         RefactorDto enrichedData = new RefactorDto(savedModel, ProgramGenerator);
         System.out.println("Saved and enriched model: " + savedModel);
-        String send = refactorService.sendDataToGenerator(savedModel);
-        System.out.println("Sent to svein :3" + send);
+        CompletableFuture.supplyAsync(() -> refactorService.sendDataToGenerator(savedModel))
+                .thenAccept(response -> System.out.println("Sent to svein: " + response))
+                .exceptionally(error -> {
+                    System.out.println("Failed to send to svein: " + error.getCause().getMessage());
+                    return null;
+                });
+
         return ResponseEntity.ok(enrichedData);
     }
 }

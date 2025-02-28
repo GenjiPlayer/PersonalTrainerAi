@@ -25,13 +25,22 @@ public class userService implements userServiceImp {
 
     @Override
     public userInput saveInput(userInput userInput) {
-        userDTO userDTO = new userDTO(userInput.getGymProficiency(), userInput.getAge(), userInput.getHeight(), userInput.getCurrentWeight(), userInput.getGoalWeight());
-        e.send(userDTO);
-        userInputRepo.save(userInput);
-        inputClient.refactor(userDTO);
-        return userInput;
-    }
+        userDTO userDTO = new userDTO(
+                userInput.getGymProficiency(),
+                userInput.getAge(),
+                userInput.getHeight(),
+                userInput.getCurrentWeight(),
+                userInput.getGoalWeight()
+        );
 
+        System.out.println("Saving user input: " + userInput);
+        userInput savedUser = userInputRepo.save(userInput);
+        System.out.println("Calling refactor service synchronously...");
+        Object refactoredResponse = inputClient.refactor(userDTO).block();
+        System.out.println("Refactor service response: " + refactoredResponse);
+
+        return savedUser;
+    }
     @Override
     public List<userInput> fetchAllUserInput() {
         return userInputRepo.findAll();

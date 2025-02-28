@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/api/workout")
 @CrossOrigin(origins = "*")
@@ -24,15 +26,19 @@ public class WorkoutController {
         this.workoutPlan = workoutPlan;
     }
 
-    @JsonIgnore
     @PostMapping("/generate")
     public ResponseEntity<String> generateWorkoutPlan(@RequestBody WorkoutModel requestBody) {
         workoutPlan.setProficiency(requestBody.getGymProficiency());
-        System.out.println(requestBody);
-        e.send(requestBody);
-        workoutRepository.save(requestBody);
-        String plan = workoutPlan.getWorkoutPlan();
-        return ResponseEntity.ok(plan);
+        System.out.println("Received workout request: " + requestBody);
+        CompletableFuture.runAsync(() -> {
+            e.send(requestBody);
+            workoutRepository.save(requestBody);
+        }).exceptionally(error -> {
+            System.out.println("Error saving workout request: " + error.getCause().getMessage());
+            return null;
+        });
+
+        return ResponseEntity.ok(workoutPlan.getWorkoutPlan());
     }
 }
 
